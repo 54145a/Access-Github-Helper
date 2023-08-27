@@ -9,7 +9,7 @@
 <body>
   <script src="https://cdn.bootcdn.net/ajax/libs/eruda/3.0.0/eruda.js"></script>
   <script>eruda.init()</script>
-  <h1 id="title">欢迎使用Github访问助手</h1>
+  <h1 id="title">检测中</h1>
   <script>
     "use strict";
     const IPs = {
@@ -23,6 +23,7 @@
       "20.233.83.145": "阿拉伯联合酋长国",
       "20.201.28.151": "巴西"
     }
+    let fastestIP = null;
     Object.keys(IPs).forEach(async ip => {
       let a = document.createElement("a");
       a.innerHTML = `<a>${IPs[ip]} 检测中</a>`;
@@ -31,6 +32,11 @@
       const isOK = await testUrl(`https://${ip}/`);
       a.innerText = `${IPs[ip]} ${isOK ? "可用" : "不可用"}`;
       if (isOK) {
+        if(!fastestIP){
+          fastestIP = ip;
+          document.getElementById("title").innerText = `即将自动跳转到${IPs[ip]}Github`;
+          setTimeout(()=>location.href = `https://${ip}/`,3000);
+        }
         a.setAttribute("href", `https://${ip}/`);
       }
     });
