@@ -43,7 +43,7 @@
         let token = setTimeout(() => {
           iframe.onerror = iframe.onload = null;
           resolve(false);
-        }, 2000, false);
+        }, 10000, false);
         iframe.onerror = () => {
           clearTimeout(token);
           resolve(false);
