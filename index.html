@@ -22,7 +22,7 @@
       "20.87.225.212": "南非",
       "20.233.83.145": "阿拉伯联合酋长国",
       "20.201.28.151": "巴西"
-    }
+    };
     let fastestIP = null;
     Object.keys(IPs).forEach(async ip => {
       let a = document.createElement("a");
@@ -32,14 +32,21 @@
       const isOK = await testUrl(`https://${ip}/`);
       a.innerText = `${IPs[ip]} ${isOK ? "可用" : "不可用"}`;
       if (isOK) {
-        if(!fastestIP){
+        if (!fastestIP) {
           fastestIP = ip;
-          document.getElementById("title").innerText = `即将自动跳转到${IPs[ip]}Github`;
-          setTimeout(()=>location.href = `https://${ip}/`,3000);
+          setTitle(`即将自动跳转到${IPs[ip]}Github`);
+          setTimeout(() => location.href = `https://${ip}/`, 3000);
         }
         a.setAttribute("href", `https://${ip}/`);
       }
     });
+    setTimeout(() => {
+      if (fastestIP) return;
+      setTitle("似乎没有可用的Github服务器");
+    }, 8000);
+    function setTitle(str) {
+      document.getElementById("title").innerText = str;
+    }
     function testUrl(url) {
       let image = new Image();
       image.src = url + "favicon.ico";
