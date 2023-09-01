@@ -7,69 +7,63 @@
 </head>
 
 <body>
+  <!--debug-->
   <script src="https://cdn.bootcdn.net/ajax/libs/eruda/3.0.0/eruda.js"></script>
   <script>eruda.init()</script>
-  <h1 id="title">检测中</h1>
-  <script>
-    "use strict";
-    const TIMEOUT_MS = 10000;
-    const IPs = {
-      "20.205.243.166": "新加坡(推荐)",
-      "20.27.177.113": "日本(推荐)",
-      "20.200.245.247": "韩国",
-      "20.207.73.82": "印度",
-      "20.248.137.48": "澳大利亚",
-      "192.30.255.113": "美国",
-      "20.87.225.212": "南非",
-      "20.233.83.145": "阿拉伯联合酋长国",
-      "20.201.28.151": "巴西"
-    };
-    let fastestIP = null;
-    Object.keys(IPs).forEach(async ip => {
-      let a = document.createElement("a");
-      a.innerHTML = `<a>${IPs[ip]} 检测中</a>`;
-      document.body.appendChild(a);
-      document.body.appendChild(document.createElement("br"));
-      const isOK = await testUrl(`https://${ip}/`);
-      a.innerText = `${IPs[ip]} ${isOK ? "可用" : "不可用"}`;
-      if (isOK) {
-        if (!fastestIP) {
-          fastestIP = ip;
-          setTitle(`即将自动跳转到${IPs[ip]}Github`);
-          setTimeout(() => location.href = `https://${ip}/`, 3000);
-        }
-        a.setAttribute("href", `https://${ip}/`);
-      }
-    });
-    setTimeout(() => {
-      if (fastestIP) return;
-      setTitle("似乎没有可用的Github服务器");
-    }, TIMEOUT_MS + 100);
-    function setTitle(str) {
-      document.getElementById("title").innerText = str;
+
+  <!--all ip status will be shown here-->
+  <div id="ipmonitor"></div>
+
+  <!--template-->
+  <template id="template">
+    <div class="part">
+      <code class="ip"></code>
+      <p class="info"></p>
+      <a class="go"></a>
+    </div>
+  </template>
+
+  <style>
+    .go{
+      background-color: #00000000;
+      outline: none;
+      padding: 5px;
     }
-    function testUrl(url) {
-      let image = new Image();
-      image.src = url + "favicon.ico";
-      image.style.display = "none";
-      document.body.appendChild(image);
-      let p = new Promise((resolve) => {
-        let token = setTimeout(() => {
-          image.onerror = image.onload = null;
-          resolve(false);
-        }, TIMEOUT_MS, false);
-        image.onerror = () => {
-          clearTimeout(token);
-          resolve(false);
-        };
-        image.onload = () => {
-          clearTimeout(token);
-          resolve(true);
-        };
-      });
-      return p;
+
+    .go:hover{
+      background-color: #00000044;
     }
-  </script>
+
+    #ipmonitor{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .part{
+      display: grid;
+      align-items: center;
+      grid: auto-flow / 1fr 1fr 1fr;
+      width: 500px;
+      padding: 5px;
+      background-color: #f2f2f2;
+      transition: all .5s ease-in;
+    }
+
+    .part .ip{
+      font-size: large;
+    }
+
+    .ok {
+      background-color: aquamarine;
+    }
+
+    .failed {
+      background-color: lightcoral;
+    }
+  </style>
+
+  <script src="index.js" defer></script>
 </body>
 
 </html>
