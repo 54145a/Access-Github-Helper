@@ -3,9 +3,9 @@
 /**配置 */
 let timeout_ms = 5000;
 let ips = {
-  "github.com": "github主站",
-  "20.205.243.166": "新加坡(推荐)",
-  "20.27.177.113": "日本(推荐)",
+  "github.com": "自动路由到最近服务器",
+  "20.205.243.166": "新加坡",
+  "20.27.177.113": "日本",
   "20.200.245.247": "韩国",
   "20.207.73.82": "印度",
   "20.248.137.48": "澳大利亚",
@@ -33,7 +33,7 @@ check();
 
 function testUrl(url) {
   let image = new Image();
-  image.src = url + "favicon.ico";
+  image.src = url + "favicon.ico?timestamp="+Datw.now();
   image.style.display = "none";
   document.body.appendChild(image);
   return new Promise((resolve) => {
