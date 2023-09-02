@@ -1,7 +1,9 @@
 "use strict";
 
 /**配置 */
-let timeout_ms = 5000;
+/**超时时间 */
+let timeout_ms = 1000;
+/**要检测的ip */
 let ips = {
   "github.com": "自动路由到最近服务器",
   "20.205.243.166": "新加坡",
@@ -17,6 +19,7 @@ let ips = {
   "baidu.com": "如果这一条检测失败，说明代码运行出现问题",
   "google.com": "这一条用于检测您的网络环境"
 }
+/**ip状态代码 */
 const IP_STATUS_CODE = {
   loading: 0,
   ok: 1,
@@ -31,8 +34,15 @@ let monitor = document.querySelector("#ipmonitor");
 
 /**初始化页面 */
 init();
+
+/**检测ip */
 check();
 
+/**
+ * 检测URL
+ * @param {string} url 地址
+ * @returns 状态码
+ */
 function testUrl(url) {
   let image = new Image();
   image.src = url + "favicon.ico?timestamp="+Date.now();
@@ -54,7 +64,22 @@ function testUrl(url) {
   });
 }
 
+/**
+ * 初始化页面
+ */
 function init(){
+  /**读取设置，如果没有就创建 */
+  timeout_ms = localStorage.getItem("timeout_ms");
+  if(!timeout_ms){
+    localStorage.setItem("timeout_ms", 1000);
+  }
+  timeout_ms = Number(timeout_ms);
+
+  /**在页面上展示设置 */
+  let settingDiv = document.getElementById("settings");
+  let timeoutMsInput = settingDiv.querySelector("#timeout");
+  timeoutMsInput.value = timeout_ms;
+
   /**获取模板元素 */
   let template = document.getElementById("template");
 
@@ -76,6 +101,11 @@ function init(){
   }
 }
 
+/**
+ * 更新页面状态展示
+ * @param {string} ip ip
+ * @param {number} state 状态
+ */
 async function updateStatus(ip, state){
   let ipel = document.getElementById(ip2ClassString(ip));
   if(!ipel){
@@ -83,6 +113,9 @@ async function updateStatus(ip, state){
   }
   if(state == IP_STATUS_CODE.loading){
     ipel.querySelector(".go").innerText = "检测中";
+    ipel.classList.add("loading");
+  }else{
+    ipel.classList.remove("loading");
   }
   if(state == IP_STATUS_CODE.ok){
     ipel.querySelector(".go").innerText = "让我访问！";
@@ -94,6 +127,9 @@ async function updateStatus(ip, state){
   }
 }
 
+/**
+ * 检测ip
+ */
 function check(){
   for(let ip in ips){
     /**为了让检测尽可能快，将检测添加到消息队列 */
@@ -101,6 +137,18 @@ function check(){
       updateStatus(ip, await testUrl(`https://${ip}/`))
     }, 0);
   }
+}
+
+/**
+ * 保存设置
+ */
+function saveSettings(){
+  let settingDiv = document.getElementById("settings");
+  let timeoutMsInput = settingDiv.querySelector("#timeout");
+  localStorage.setItem("timeout_ms", timeoutMsInput.value.toString());
+  monitor.innerHTML = "";
+  init();
+  check();
 }
 
 function ip2ClassString(ip){
