@@ -10,7 +10,16 @@
   <!--debug-->
   <script src="https://cdn.bootcdn.net/ajax/libs/eruda/3.0.0/eruda.js"></script>
   <script>eruda.init()</script>
-  <h1 id="title">让我访问Github！</h1>
+
+  <div class="header">
+    <h1 id="title">让我访问Github！</h1>
+    <div id="settings">
+      设置
+      <p>超时时长：<input id="timeout" type="number" max="200000" min="0" value="1000"/>ms</p>
+      <button onclick="saveSettings()">保存设置 / 重新检测</button>
+    </div>
+  </div>
+
   <!--all ip status will be shown here-->
   <div id="ipmonitor"></div>
 
@@ -23,48 +32,8 @@
     </div>
   </template>
 
-  <style>
-    #title {
-      text-align: center;
-    }
-    .go {
-      background-color: #00000000;
-      outline: none;
-      padding: 5px;
-    }
-
-    .go:hover {
-      background-color: #00000044;
-    }
-
-    #ipmonitor {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .part {
-      display: grid;
-      align-items: center;
-      grid: auto-flow / 1fr 1fr 1fr;
-      width: 500px;
-      padding: 5px;
-      background-color: #f2f2f2;
-      transition: all .5s ease-in;
-    }
-
-    .part .ip {
-      font-size: large;
-    }
-
-    .ok {
-      background-color: aquamarine;
-    }
-
-    .failed {
-      background-color: lightcoral;
-    }
-  </style>
+  <!--resources-->
+  <link rel="stylesheet" href="./style.css" />
   <script src="index.js" defer></script>
 </body>
 

@@ -1,0 +1,62 @@
+:root{
+  --el-width: 500px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#settings{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--el-width);
+  padding: 5px;
+  background-color: #336699;
+  color: #ffffff;
+  font-size: large;
+}
+
+.go {
+  background-color: #00000000;
+  outline: none;
+  padding: 5px;
+}
+
+.go:hover {
+  background-color: #00000044;
+}
+
+#ipmonitor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.part {
+  display: grid;
+  align-items: center;
+  grid: auto-flow / 1fr 1fr 1fr;
+  width: var(--el-width);
+  padding: 5px;
+  background-color: #f2f2f2;
+  transition: all .5s ease-in;
+}
+
+.part .ip {
+  font-size: large;
+}
+
+.part *{
+  text-align: center;
+}
+
+.ok {
+  background-color: aquamarine;
+}
+
+.failed {
+  background-color: lightcoral;
+}
