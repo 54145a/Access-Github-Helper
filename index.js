@@ -33,7 +33,7 @@ check();
 
 function testUrl(url) {
   let image = new Image();
-  image.src = url + "favicon.ico?timestamp="+Datw.now();
+  image.src = url + "favicon.ico?timestamp="+Date.now();
   image.style.display = "none";
   document.body.appendChild(image);
   return new Promise((resolve) => {
