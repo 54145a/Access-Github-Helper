@@ -4,18 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <title>访问Github</title>
-</head>
-
-<body>
+  <link href="style.css" rel="stylesheet" type="text/css" />
   <!--debug-->
   <script src="https://cdn.bootcdn.net/ajax/libs/eruda/3.0.0/eruda.js"></script>
   <script>eruda.init()</script>
+</head>
 
+<body>
   <div class="header">
     <h1 id="title">让我访问Github！</h1>
     <div id="settings">
       设置
-      <p>超时时长：<input id="timeout" type="number" max="200000" min="0" value="1000"/>ms</p>
+      <p>超时时长：<input id="timeout" type="number" max="200000" min="0" value="5000" />ms</p>
       <button onclick="saveSettings()">保存设置 / 重新检测</button>
     </div>
   </div>
@@ -31,10 +31,8 @@
       <a class="go"></a>
     </div>
   </template>
-
-  <!--resources-->
-  <link rel="stylesheet" href="./style.css" />
-  <script src="index.js?v=1" defer></script>
+  <!--script-->
+  <script src="script.js?v=1" defer></script>
 </body>
 
-</html>
+>

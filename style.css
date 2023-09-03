@@ -1,4 +1,9 @@
-:root{
+html {
+  height: 100%;
+  width: 100%;
+}
+
+:root {
   --el-width: 500px;
 }
 
@@ -8,7 +13,7 @@
   align-items: center;
 }
 
-#settings{
+#settings {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,7 +54,7 @@
   font-size: large;
 }
 
-.part *{
+.part * {
   text-align: center;
 }
 
