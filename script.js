@@ -15,8 +15,8 @@ let ips = {
   "20.87.225.212": "南非",
   "20.233.83.145": "阿拉伯联合酋长国",
   "20.201.28.151": "巴西",
-  "kgithub.com":"镜像网站，只读，无法进行登录等操作",
-  "baidu.com": "如果这一条检测失败，说明代码运行或网络环境出现问题",
+  "kgithub.com":"非官方镜像网站，只读，不可登录",
+  "baidu.com": "用于检测代码运行和网络环境是否出现问题",
   //"google.com": "这一条用于检测您的网络环境"
 }
 /**ip状态代码 */
@@ -122,7 +122,7 @@ async function updateStatus(ip, state){
     ipel.classList.add("ok");
   }
   if(state == IP_STATUS_CODE.failed){
-    ipel.querySelector(".go").innerText = "失效";
+    ipel.querySelector(".go").innerText = "失效(如果本按钮为蓝色也不一定)";
     ipel.classList.add("failed");
   }
 }
